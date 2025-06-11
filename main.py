@@ -4,6 +4,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.utils import escolher_local_salvamento
+from docx import Document
 
 from qualificacoes.solteiro import criar_qualificacao_solteiro, pergunta_dados_solteiro
 from qualificacoes.casado_simples import (
@@ -26,6 +27,7 @@ from qualificacoes.viuvo import criar_qualificacao_viuvo, pergunta_dados_viuvo
 
 
 def main():
+    doc = Document()
     while True:
         print("\n========= MENU DE QUALIFICAÇÃO =========")
         print("1. Solteiro")
@@ -34,61 +36,38 @@ def main():
         print("4. Casado - Anuente")
         print("5. Divorciado")
         print("6. Viúvo")
-        print("0. Sair")
+        print("0. Finalizar e salvar")
         opcao = input("Escolha uma opção: ").strip()
 
         if opcao == "1":
             dados = pergunta_dados_solteiro()
-            caminho = escolher_local_salvamento(
-                f"Qualificação_Solteiro - {dados['nome'].title().replace(' ', '_')}.docx"
-            )
-            if caminho:
-                criar_qualificacao_solteiro(dados, caminho)
+            criar_qualificacao_solteiro(dados, doc)
 
         elif opcao == "2":
             dados = pergunta_dados_casado_simples()
-            caminho = escolher_local_salvamento(
-                f"Qualificação_Casado_Simples - {dados['nome'].title().replace(' ', '_')}.docx"
-            )
-            if caminho:
-                criar_qualificacao_casado_simples(dados, caminho)
+            criar_qualificacao_casado_simples(dados, doc)
 
         elif opcao == "3":
             dados = pergunta_dados_casado_completa()
-            caminho = escolher_local_salvamento(
-                f"Qualificação_Casado_Completo - {dados['nome'].title().replace(' ', '_')}.docx"
-            )
-            if caminho:
-                criar_qualificacao_casado_completa(dados, caminho)
-        
+            criar_qualificacao_casado_completa(dados, doc)
+
         elif opcao == "4":
             dados = pergunta_dados_casado_anuente()
-            caminho = escolher_local_salvamento(
-                f"Qualificação_Casado_Completo - {dados['nome'].title().replace(' ', '_')}.docx"
-            )
-            if caminho:
-                criar_qualificacao_casado_anuente(dados, caminho)
+            criar_qualificacao_casado_anuente(dados, doc)
 
         elif opcao == "5":
             dados = pergunta_dados_divorciado()
-            caminho = escolher_local_salvamento(
-                f"Qualificação_Divorciado - {dados['nome'].title().replace(' ', '_')}.docx"
-            )
-            if caminho:
-                criar_qualificacao_divorciado(dados, caminho)
+            criar_qualificacao_divorciado(dados, doc)
 
         elif opcao == "6":
             dados = pergunta_dados_viuvo()
-            caminho = escolher_local_salvamento(
-                f"Qualificação_Viuvo - {dados['nome'].title().replace(' ', '_')}.docx"
-            )
-            if caminho:
-                criar_qualificacao_viuvo(dados, caminho)
+            criar_qualificacao_viuvo(dados, doc)
 
         elif opcao == "0":
-            print("Saindo do programa. Até logo!")
+            caminho = escolher_local_salvamento("Qualificações.docx")
+            if caminho:
+                doc.save(caminho)
             break
-
         else:
             print("\n\n⚠️  Opção inválida. Tente novamente.")
 

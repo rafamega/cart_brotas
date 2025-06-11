@@ -17,8 +17,7 @@ from utils.utils import (
 
 
 # QUALIFICAÇÃO CASADO-SIMPLES =================================================
-def criar_qualificacao_casado_completa(dados, caminho):
-    doc = Document()
+def criar_qualificacao_casado_completa(dados, doc):
     style = doc.styles["Normal"]
     font = style.font
     font.name = "Times New Roman"
@@ -107,9 +106,7 @@ def criar_qualificacao_casado_completa(dados, caminho):
         f"{dados['cidade']}/{dados['estado']}, CEP: {dados['cep']}."
     )
 
-    # Salva o documento
-    doc.save(caminho)
-    print(f"✅ Documento salvo como: {caminho}")
+    print(f"✅ Qualificação de {dados['nome']} adicionada ao documento.")
 
 
 # ENTRADA INTERATIVA ==========================================================

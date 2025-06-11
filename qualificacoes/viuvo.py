@@ -12,8 +12,7 @@ from utils.utils import coletar_endereco_interativo, cartorio
 
 
 # QUALFIICAÇÃO SOLTEIRO
-def criar_qualificacao_viuvo(dados, caminho):
-    doc = Document()
+def criar_qualificacao_viuvo(dados, doc):
     style = doc.styles["Normal"]
     font = style.font
     font.name = "Times New Roman"
@@ -77,9 +76,7 @@ def criar_qualificacao_viuvo(dados, caminho):
         f"CEP: {dados['cep']}."
     )
 
-    # Salva o documento
-    doc.save(caminho)
-    print(f"✅ Documento salvo como: {caminho}")
+    print(f"✅ Qualificação de {dados['nome']} adicionada ao documento.")
 
 
 def pergunta_dados_viuvo():
