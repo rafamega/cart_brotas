@@ -1,10 +1,13 @@
 # coleta.py
+from num2words import num2words
 
 from utils.utils import (
     formatar_nome,
     formatar_rg,
     formatar_cpf,
     formatar_cpf,
+    formatar_valor,
+    calcular_itbi
 )
 
 
@@ -71,3 +74,8 @@ def regime_casamento():
             return "Separação de Bens"
         case _:
             return "Comunhão Parcial de Bens"
+        
+def valor():
+    valor_venal = formatar_valor(input("Valor Venal: "))
+    valor = formatar_valor(input("Valor ajustado: "))
+    itbi = calcular_itbi(input("ITBI: "))
