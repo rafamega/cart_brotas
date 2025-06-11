@@ -1,6 +1,3 @@
-# coleta.py
-from num2words import num2words
-
 from utils.utils import (
     formatar_nome,
     formatar_rg,
