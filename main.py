@@ -28,6 +28,7 @@ from qualificacoes.viuvo import criar_qualificacao_viuvo, pergunta_dados_viuvo
 
 def main():
     doc = Document()
+    assinantes = []
     while True:
         print("\n========= MENU DE QUALIFICAÇÃO =========")
         print("1. Solteiro")
@@ -42,31 +43,44 @@ def main():
         if opcao == "1":
             dados = pergunta_dados_solteiro()
             criar_qualificacao_solteiro(dados, doc)
+            assinantes.append(dados["nome"].upper())
 
         elif opcao == "2":
             dados = pergunta_dados_casado_simples()
             criar_qualificacao_casado_simples(dados, doc)
+            assinantes.append(dados["nome"].upper())
 
         elif opcao == "3":
             dados = pergunta_dados_casado_completa()
             criar_qualificacao_casado_completa(dados, doc)
+            assinantes.append(dados["nome"].upper())
+            assinantes.append(dados["nome_conjuge"].upper())
 
         elif opcao == "4":
             dados = pergunta_dados_casado_anuente()
             criar_qualificacao_casado_anuente(dados, doc)
+            assinantes.append(dados["nome"].upper())
+            assinantes.append(dados["nome_conjuge"].upper())
 
         elif opcao == "5":
             dados = pergunta_dados_divorciado()
             criar_qualificacao_divorciado(dados, doc)
+            assinantes.append(dados["nome"].upper())
 
         elif opcao == "6":
             dados = pergunta_dados_viuvo()
             criar_qualificacao_viuvo(dados, doc)
+            assinantes.append(dados["nome"].upper())
 
         elif opcao == "0":
             caminho = escolher_local_salvamento("Qualificações.docx")
             if caminho:
-                doc.save(caminho)
+                if assinantes:
+                    p_assinantes = doc.add_paragraph()
+
+                    run = p_assinantes.add_run("(aa) " + " // ".join(assinantes))
+                    run.italic = True
+            doc.save(caminho)
             break
         else:
             print("\n\n⚠️  Opção inválida. Tente novamente.")
