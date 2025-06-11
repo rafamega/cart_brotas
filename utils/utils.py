@@ -162,9 +162,8 @@ def formatar_cep(cep):
 
 
 # Valores ***
-
-def formatar_valor(valor) -> str:
-    # Se for string, converte para float (aceita vírgula como separador decimal)
+def formatar_valor(valor, usar_hum=True) -> str:
+    # Se for string, converte para float
     if isinstance(valor, str):
         valor = float(valor.replace(".", "").replace(",", ".").strip())
 
@@ -173,13 +172,22 @@ def formatar_valor(valor) -> str:
         f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     )
 
-    # Separação por extenso
+    # Parte numérica
     parte_inteira = int(valor)
     centavos = int(round((valor - parte_inteira) * 100))
 
-    extenso = f"{num2words(parte_inteira, lang='pt_BR')} Reais"
+    # Real/Reais
+    moeda = "Real" if parte_inteira == 1 else "Reais"
+    extenso = f"{num2words(parte_inteira, lang='pt_BR')} {moeda}"
+
+    # Centavo/Centavos
     if centavos > 0:
-        extenso += f" e {num2words(centavos, lang='pt_BR')} centavos"
+        centavo_ext = "centavo" if centavos == 1 else "centavos"
+        extenso += f" e {num2words(centavos, lang='pt_BR')} {centavo_ext}"
+
+    # Substitui 'um' por 'hum' se desejado
+    if usar_hum:
+        extenso = extenso.replace("um ", "hum ")
 
     return f"{valor_formatado} ({extenso})"
 

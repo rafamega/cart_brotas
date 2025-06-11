@@ -74,8 +74,21 @@ def regime_casamento():
             return "Separação de Bens"
         case _:
             return "Comunhão Parcial de Bens"
-        
-def valor():
-    valor_venal = formatar_valor(input("Valor Venal: "))
-    valor = formatar_valor(input("Valor ajustado: "))
-    itbi = calcular_itbi(input("ITBI: "))
+
+
+def coletar_dados_valores():
+    dados_valores = {}
+    
+    valor_ajustado_str = input("Valor ajustado: ")
+    valor_venal_str = input("Valor Venal: ")
+    
+    # Converte os valores de string para float
+    valor_ajustado_float = float(valor_ajustado_str.replace(".", "").replace(",", "."))
+    valor_venal_float = float(valor_venal_str.replace(".", "").replace(",", "."))
+
+    # Formata tudo ao final
+    dados_valores["valor_ajustado"] = formatar_valor(valor_ajustado_float)
+    dados_valores["valor_venal"] = formatar_valor(valor_venal_float)
+    dados_valores["valor_itbi"] = calcular_itbi(valor_ajustado_float)
+
+    return dados_valores
